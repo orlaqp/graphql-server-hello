@@ -1,10 +1,13 @@
-import { Author, View } from './connectors';
+import { Author, View, getFortuneCookie } from './connectors';
 
 const resolvers = {
     Query: {
         author(_, args) {
             return Author.find({ where: args });
         },
+        getFortuneCookie(_, args) {
+            return getFortuneCookie.getOne();
+        }
     },
 
     Author: {

@@ -1,7 +1,16 @@
 import Sequelize from 'sequelize';
 import Mongoose from 'mongoose';
+import rp from 'request-promise';
+
 import casual from 'casual';
 import _ from 'lodash';
+
+
+/*
+ *
+ *  SQL LITE
+ * 
+*/
 
 const db = new Sequelize('blog', null, null, {
   dialect: 'sqlite',
@@ -22,6 +31,13 @@ AuthorModel.hasMany(PostModel);
 PostModel.belongsTo(AuthorModel);
 
 
+/*
+ *
+ *  MONGO
+ * 
+*/
+
+
 
 // somewhere in the middle:
 const mongo = Mongoose.connect('mongodb://localhost/views');
@@ -32,6 +48,29 @@ const ViewSchema = Mongoose.Schema({
 });
 
 const View = Mongoose.model('views', ViewSchema);
+
+
+/*
+ *
+ *  REST SERVICE
+ * 
+*/
+
+const getFortuneCookie = {
+    getOne() {
+        return rp('http://fortunecookieapi.com/v1/cookie')
+            .then((res) => JSON.parse(res))
+            .then((res) => {
+                return res[0].fortune.message;
+            })
+    }
+}
+
+/*
+ *
+ *  DATA MOCKING
+ * 
+*/
 
 
 // create mock data with a seed, so we always get the same
@@ -60,4 +99,4 @@ db.sync({ force: true }).then(() => {
 const Author = db.models.author;
 const Post = db.models.post;
 
-export { Author, Post, View };
+export { Author, Post, View, getFortuneCookie };
