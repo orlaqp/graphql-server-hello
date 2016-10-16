@@ -2,15 +2,19 @@
 
 ### First
 
-`cd server`
-`npm install`
-`npm start`
+```
+cd server`
+npm install
+npm start
+```
 
 the open an extra terminal window:
 
-`cd client`
-`npm install`
-`npm start`
+```
+cd client
+npm install
+npm start
+```
 
 Open the development tools (I used a Mac with chrome, so basivally press Cmd + Shift + I). Open the following address:
 
