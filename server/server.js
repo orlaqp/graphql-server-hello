@@ -2,6 +2,7 @@ import express from 'express';
 import Schema from './data/schema';
 import Resolvers from './data/resolvers';
 // import Mocks from './data/mocks';
+import cors from 'cors';
 
 import { apolloExpress, graphiqlExpress } from 'apollo-server';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
@@ -18,11 +19,13 @@ const executableSchema = makeExecutableSchema({
   printErrors: true,
 });
 
-graphQLServer.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+graphQLServer.use('*', cors());
+
+// graphQLServer.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // addMockFunctionsToSchema({
 //   schema: executableSchema,

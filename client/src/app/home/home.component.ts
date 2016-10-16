@@ -13,10 +13,17 @@ import gpl from 'graphql-tag';
 // `;
 
 const GetAuthor = gpl`
-  query author {
+  {
+  author(firstName: "Edmond") {
+    id
     firstName
-    lastName
+    posts {
+      id
+      title
+    }
   }
+  getFortuneCookie
+}
 `;
 
 
