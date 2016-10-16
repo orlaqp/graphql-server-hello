@@ -7,7 +7,7 @@ import { apolloExpress, graphiqlExpress } from 'apollo-server';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
 
-const GRAPHQL_PORT = 8080;
+const GRAPHQL_PORT = 8081;
 
 const graphQLServer = express();
 
@@ -16,6 +16,12 @@ const executableSchema = makeExecutableSchema({
   resolvers: Resolvers,
   allowUndefinedInResolve: false,
   printErrors: true,
+});
+
+graphQLServer.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 // addMockFunctionsToSchema({
@@ -37,3 +43,4 @@ graphQLServer.use('/graphiql', graphiqlExpress({
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(
   `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`
 ));
+
